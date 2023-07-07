@@ -66,6 +66,33 @@ app.post('/api/notes', (req, res) => {
     }
 });
 
+app.delete('/api/notes/:id', (req, res) => {
+    console.info(`${req.method} request received to add a new note`);
+    fs.readFile('./db/db.json', 'utf8', (err, data) => {
+        if (err) {
+          console.error(err);
+        } else {
+          // Convert string into JSON object
+          const parsedNotes = JSON.stringify(data);
+    
+          // Add a new review
+          console.log(parsedNotes.includes('id'));
+    
+          // Write updated reviews back to the file
+          fs.writeFile(
+            './db/db.json',
+            JSON.stringify(parsedNotes, null, 4),
+            (writeErr) =>
+              writeErr
+                ? console.error(writeErr)
+                : console.info('Successfully deleted note!')
+          );
+        }
+      });
+    console.log(response)
+    res.status(201).json(response);
+});
+
 
 app.listen(PORT, () => {
     console.log(`Application is running at http://localhost:${PORT}`)
