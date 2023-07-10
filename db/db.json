@@ -1,37 +1,32 @@
 [
-  {
-    "title": "Test Title",
-    "text": "Test text",
-    "id": "123a"
-  },
-  {
-    "title": "Test 1",
-    "text": "Text 1",
-    "id": "dcfe"
-  },
-  {
-    "title": "Test 2",
-    "text": "Text 2",
-    "id": "cf21"
-  },
-  {
-    "title": "Test 3",
-    "text": "Text 3",
-    "id": "d89a"
-  },
-  {
-    "title": "Test 4",
-    "text": "Text 4",
-    "id": "5384"
-  },
-  {
-    "title": "Test 5",
-    "text": "Text 5",
-    "id": "58de"
-  },
-  {
-    "title": "Test 6",
-    "text": "Text 6",
-    "id": "538c"
-  }
+    {
+        "title": "Test Title",
+        "text": "Test text",
+        "id": "123a"
+    },
+    {
+        "title": "Test 1",
+        "text": "Text 1",
+        "id": "dcfe"
+    },
+    {
+        "title": "Test 2",
+        "text": "Text 2",
+        "id": "cf21"
+    },
+    {
+        "title": "Test 3",
+        "text": "Text 3",
+        "id": "d89a"
+    },
+    {
+        "title": "Test 4",
+        "text": "Text 4",
+        "id": "5384"
+    },
+    {
+        "title": "Test 5",
+        "text": "Text 5",
+        "id": "58de"
+    }
 ]
