@@ -10,6 +10,7 @@ This application is designed for the user to create notes for themselves and ref
 - If the user desires to remove a note, click the red trash can icon next to the note title in the left side column and that note will be deleted.
 ### Resources
 [Deployed Application](https://note-taker-application0001-86b2db245d15.herokuapp.com/)
+
 [Github Repo](https://github.com/cdgonzo23)
 
 ### Example Screenshots
