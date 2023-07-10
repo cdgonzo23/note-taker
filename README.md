@@ -15,4 +15,4 @@ This application is designed for the user to create notes for themselves and ref
 
 ### Example Screenshots
 ![Home Page](./images/notetaker.png)
-![Notes Page](./images/notespage.png)
+![Notes Page](./images/examplenotespage.png)
