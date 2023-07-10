@@ -3,7 +3,6 @@ const path = require('path');
 const PORT = process.env.PORT ?? 3001;
 const app = express();
 const fs = require('fs')
-const notesData = require('./db/db.json')
 const uuid = require ('./helper/uuid');
 
 app.use(express.json());
@@ -11,16 +10,14 @@ app.use(express.json());
 app.use(express.static('public'));
 
 app.get('/notes', (req, res) => {
-    return res.sendFile(path.join(__dirname, '/public/notes.html'))
+    return res.sendFile(path.join(__dirname, '/views/notes.html'))
 });
 
 app.get('/api/notes', (req, res) => {
-    res.json(notesData);
+    let notesReference = fs.readFileSync('./db/db.json', 'utf8');
+    const parsedNotes = JSON.parse(notesReference);
+    res.json(parsedNotes);
     console.info(`${req.method} request recieved to get notes`)
-});
-
-app.get('*', (req, res) => {
-    return res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 
 app.post('/api/notes', (req, res) => {
@@ -34,27 +31,13 @@ app.post('/api/notes', (req, res) => {
             text,
             id: uuid()
         }
-        fs.readFile('./db/db.json', 'utf8', (err, data) => {
-            if (err) {
-              console.error(err);
-            } else {
-              // Convert string into JSON object
-              const parsedNotes = JSON.parse(data);
+        let notesReference = fs.readFileSync('./db/db.json', 'utf8');
+        const parsedNotes = JSON.parse(notesReference);
+        parsedNotes.push(newNote);
+
+        const noteString = JSON.stringify(parsedNotes, null, 2);
       
-              // Add a new review
-              parsedNotes.push(newNote);
-      
-              // Write updated reviews back to the file
-              fs.writeFile(
-                './db/db.json',
-                JSON.stringify(parsedNotes, null, 4),
-                (writeErr) =>
-                  writeErr
-                    ? console.error(writeErr)
-                    : console.info('Successfully updated notes!')
-              );
-            }
-          });
+        fs.writeFileSync('./db/db.json', noteString);
         const response = {
             status: 'Success',
             body: newNote
@@ -66,33 +49,40 @@ app.post('/api/notes', (req, res) => {
     }
 });
 
-app.delete('/api/notes/:id', (req, res) => {
-    console.info(`${req.method} request received to add a new note`);
-    fs.readFile('./db/db.json', 'utf8', (err, data) => {
-        if (err) {
-          console.error(err);
-        } else {
-          // Convert string into JSON object
-          const parsedNotes = JSON.stringify(data);
-    
-          // Add a new review
-          console.log(parsedNotes.includes('id'));
-    
-          // Write updated reviews back to the file
-          fs.writeFile(
-            './db/db.json',
-            JSON.stringify(parsedNotes, null, 4),
-            (writeErr) =>
-              writeErr
-                ? console.error(writeErr)
-                : console.info('Successfully deleted note!')
-          );
-        }
-      });
-    console.log(response)
-    res.status(201).json(response);
-});
 
+
+// read the file, parsed it, used filter to filter out the id that was being deleted, stringified it and wrote it back to the db file
+
+// app.delete('/api/notes/:id', (req, res) => {
+//     console.info(`${req.method} request received to add a new note`);
+//     fs.readFile('./db/db.json', 'utf8', (err, data) => {
+//         if (err) {
+//           console.error(err);
+//         } else {
+//           // Convert string into JSON object
+//           const parsedNotes = JSON.stringify(data);
+    
+//           // Add a new review
+//           console.log(parsedNotes.includes('id'));
+    
+//           // Write updated reviews back to the file
+//           fs.writeFile(
+//             './db/db.json',
+//             JSON.stringify(parsedNotes, null, 4),
+//             (writeErr) =>
+//               writeErr
+//                 ? console.error(writeErr)
+//                 : console.info('Successfully deleted note!')
+//           );
+//         }
+//       });
+//     console.log(response)
+//     res.status(201).json(response);
+// });
+
+app.get('*', (req, res) => {
+    return res.sendFile(path.join(__dirname, '/views/index.html'));
+});
 
 app.listen(PORT, () => {
     console.log(`Application is running at http://localhost:${PORT}`)
